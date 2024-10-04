@@ -5,7 +5,6 @@ import json
 import re
 import statistics
 import sys
-
 import requests
 from pyquery import PyQuery as pq
 from dataclasses import dataclass
@@ -15,6 +14,7 @@ from enum import Enum
 
 
 class Event(Enum):
+    UNKNOWN = ''
     THREE = '333'
     TWO = '222'
     FOUR = '444'
@@ -49,11 +49,16 @@ class Competition:
     name: str
     location: str
     venue: str
-    date: datetime
+    date: datetime | str
     link: str
 
     def __str__(self):
-        return '[{}] {} ({})'.format(self.date.strftime(self.DATE_FORMAT), self.name, self.identifier)
+        if isinstance(self.date, datetime):
+            date = self.date.strftime(self.DATE_FORMAT)
+        else:
+            date = self.date
+
+        return '[{}] {} ({})'.format(date, self.name, self.identifier)
 
     def __repr__(self):
         return self.__str__()
@@ -128,7 +133,10 @@ class WCA:
             venue = block('.venue-link p').text()
 
             date = self._date_cleanup.sub('', block.parent()('.date').text())
-            date = datetime.strptime(date, self._date_format)
+            try:
+                date = datetime.strptime(date, self._date_format)
+            except ValueError:
+                pass
 
             competitions.append(Competition(
                 identifier=identifier,
@@ -155,12 +163,12 @@ class WCA:
         records = doc('.personal-records tr').items()
         for record in records:  # type: pq
             cells = record('td').items()
-            record_event = ''
+            record_event = Event.UNKNOWN
             event_rank = sys.maxsize
             event_average = float(sys.maxsize)
 
             for cell in cells:  # type: pq
-                if not record_event:
+                if record_event == Event.UNKNOWN:
                     event = cell.attr('data-event')
                     if event:
                         record_event = Event.parse(event)
@@ -185,7 +193,7 @@ class WCA:
 
                     event_average = minutes * 60 + seconds
 
-            if record_event:
+            if record_event != Event.UNKNOWN:
                 ranks[record_event] = event_rank
                 averages[record_event] = event_average
 
@@ -293,7 +301,7 @@ if __name__ == '__main__':
 
         parser = ArgumentParser(description='World Cube Association CLI')
         parser.add_argument('--format', '-f', default='short', choices=('short', 'csv', 'json'), help='format')
-        parser.add_argument('--concurrency', '-c', type=int, default=8, help='remote call concurrency')
+        parser.add_argument('--concurrency', '-c', type=int, default=4, help='remote call concurrency')
 
         command_parser = parser.add_subparsers(dest='command')
         command_competitions = command_parser.add_parser('competitions')
@@ -305,7 +313,7 @@ if __name__ == '__main__':
         command_competitors = command_parser.add_parser('competitor-stats')
         command_competitors.add_argument('competition_id', type=str, help='Competition ID')
         command_competitors.add_argument('--event', type=str, default=Event.THREE.value, choices=[
-            e.value for e in Event
+            e.value for e in Event if e != Event.UNKNOWN
         ], help='display average time stats for the given event')
 
         command_person = command_parser.add_parser('person')
