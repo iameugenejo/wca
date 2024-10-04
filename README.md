@@ -89,7 +89,7 @@ Aras Benson Casciato (2024CASC03)
 ```commandline
 % ./wca.py competitor-stats --help
 usage: wca.py competitor-stats [-h]
-                               [--event {,333,222,444,555,666,333bf,333oh,clock,minx,pyram,skewb,sq1}]
+                               [--event {333,222,444,555,666,333bf,333oh,clock,minx,pyram,skewb,sq1}]
                                competition_id
 
 positional arguments:
