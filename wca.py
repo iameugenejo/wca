@@ -290,7 +290,7 @@ if __name__ == '__main__':
             '25p': statistics.quantiles(nums, n=100)[24],
             'median': statistics.median(nums),
             '75p': statistics.quantiles(nums, n=100)[74],
-            '95p': statistics.quantiles(nums, n=100)[95],
+            '95p': statistics.quantiles(nums, n=100)[94],
             '99p': statistics.quantiles(nums, n=100)[98],
         }
 
