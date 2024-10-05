@@ -31,7 +31,7 @@ options:
 
 #### List Competitions
 ```commandline
-% ./wca.py competitions --help
+(venv) % ./wca.py competitions --help
 usage: wca.py competitions [-h] [--search SEARCH]
 
 options:
@@ -41,7 +41,7 @@ options:
 
 # example
 
-% ./wca.py competitions --search california
+(venv) % ./wca.py competitions --search california
 [2024/10/13] Berkeley Fall 2024 (BerkeleyFall2024)
 [2024/10/18] UCSD Weeknights I 2024 (UCSDWeeknightsI2024)
 [2024/10/19] UCSB Cubing 2024 (UCSBCubing2024)
@@ -55,7 +55,7 @@ options:
 
 #### List Competitors
 ```commandline
-% ./wca.py competitors --help
+(venv) % ./wca.py competitors --help
 usage: wca.py competitors [-h] competition_id
 
 positional arguments:
@@ -66,7 +66,7 @@ options:
 
 # example
 
-% ./wca.py competitors TemeculaValleyFall2024
+(venv) % ./wca.py competitors TemeculaValleyFall2024
 Aayush Manish Bathija (2019BATH02)
 Adam Cayne Emmons
 Adlan Darpi (2024DARP01)
@@ -87,7 +87,7 @@ Aras Benson Casciato (2024CASC03)
 #### Get Competitor Stats
 
 ```commandline
-% ./wca.py competitor-stats --help
+(venv) % ./wca.py competitor-stats --help
 usage: wca.py competitor-stats [-h]
                                [--event {333,222,444,555,666,333bf,333oh,clock,minx,pyram,skewb,sq1}]
                                competition_id
@@ -102,7 +102,7 @@ options:
 
 # example
 
-% ./wca.py competitor-stats TemeculaValleyFall2024 --event 333
+(venv) % ./wca.py competitor-stats TemeculaValleyFall2024 --event 333
 min: 4.86
 max: 102.33
 mean: 20.58875968992248
@@ -115,14 +115,14 @@ median: 15.36
 
 #### Get Person
 ```commandline
-% ./wca.py competitions --help
+(venv) % ./wca.py competitions --help
 usage: wca.py competitions [-h] [--search SEARCH]
 
 options:
   -h, --help            show this help message and exit
   --search SEARCH, -s SEARCH
                         search keywords
-(venv) eugenejo@Eugenes-MBP wca % ./wca.py person --help
+(venv) % ./wca.py person --help
 usage: wca.py person [-h] person_id
 
 positional arguments:
@@ -133,7 +133,7 @@ options:
 
 # example
   
-% ./wca.py person 2019BATH02
+(venv) % ./wca.py person 2019BATH02
 ------------------------------------
 [Rank 1638] Aayush Manish Bathija (2019BATH02)
 ------------------------------------
